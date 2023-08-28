@@ -1,7 +1,7 @@
 import { wait } from "@testing-library/user-event/dist/utils";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Videos } from "./index";
+import { Movies } from "./index";
 import { fetchFromApi } from "../utilty/FetchFromApi";
 import { useParams } from "react-router-dom";
 
@@ -10,7 +10,7 @@ function Feed() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const {searchTerm} = useParams()
+  const { searchTerm } = useParams();
 
   useEffect(() => {
     // fetchData(selectedCatogory)
@@ -30,14 +30,12 @@ function Feed() {
 
   return (
     <section className="flex relative md:static  ">
-      
-
       <div className="text-[20px] md:text-3xl h-[90vh] mt-[50px] md:mt-0 w-full flex flex-col mb-2 overflow-auto md:p-5 font-bold ">
         <div className="flex ">
           Search results for: {searchTerm}
-          <p className="  text-[#f31503] ml-2"> videos</p>
+          <p className="  text-[#f31503] ml-2"> movies</p>
         </div>
-        {loading ? <div>Loading...</div> : <Videos videos={data} />}
+        {loading ? <div>Loading...</div> : <Movies videos={data} />}
         {error && <div className="text-red-500 ">{error.message}</div>}
       </div>
     </section>

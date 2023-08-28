@@ -35,11 +35,11 @@ function LoadingSkeleton({ width, height, hideItem, loadingCardMaping }) {
         <div className={`mt-5 w-full md:w-${`[340px]` ||'[400px]'} dark:bg-gray-700 h-[30px] animate-pulse `}></div>
       </div>
       <section className="flex flex-wrap gap-2" >
-        {loadingCardMaping.map((item) => {
+        {/* {loadingCardMaping.map((item) => {
           return (
             <div className="w-[340px] h-[12rem]  bg-slate-500 ">{item}</div>
           );
-        })}
+        })} */}
       </section>
     </div>
   );

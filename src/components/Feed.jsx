@@ -1,9 +1,10 @@
 import { wait } from "@testing-library/user-event/dist/utils";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { SideBar, Videos, LoadingSkeleton } from "./index";
-import { VideosLoading} from './CustomizeLoadingVideos'
+import { SideBar, Videos, LoadingSkeleton, Movies } from "./index";
+import { VideosLoading } from "./CustomizeLoadingVideos";
 import { fetchFromApi } from "../utilty/FetchFromApi";
+import CustomScrollBar from "./CustomScrollBar";
 
 function Feed() {
   const [selectedCatogory, setSelectedCategory] = useState("New");
@@ -11,21 +12,21 @@ function Feed() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    // fetchData(selectedCatogory)
-    setLoading(true);
-    fetchFromApi(`/search?part=snippet&q=${selectedCatogory}`)
-      .then((data) => {
-        setData(data.items);
-        setLoading(false);
-        // console.log(res);
-      })
-      .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
-    // console.log("data", data);
-  }, [selectedCatogory]);
+  // useEffect(() => {
+  //   // fetchData(selectedCatogory)
+  //   // setLoading(true);
+  //   fetchFromApi(`/search?part=snippet&q=${selectedCatogory}`)
+  //     .then((data) => {
+  //       setData(data.items);
+  //       // setLoading(false);
+  //       // console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       setError(err);
+  //       // setLoading(false);
+  //     });
+  //   // console.log("data", data);
+  // }, [selectedCatogory]);
 
   return (
     <section className="flex relative mt-5 md:mt-0 md:static">
@@ -42,14 +43,44 @@ function Feed() {
       <div
         className={`w-full text-[20px] md:text-3xl h-[90vh] mt-[50px] md:mt-0 md:w-4/5 flex flex-col mb-2 overflow-auto md:p-5 font-bold `}
       >
-        <div className="flex">{selectedCatogory}</div>
         {loading ? (
           // <LoadingSkeleton width="340px" height="12rem" hideItem={true} loadingCardMaping = {[1,2,3,4,5,6,7,8]} />
 
-          <VideosLoading  width="340px" height="12rem" hideItem={true} loadingCardMaping = {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]}  />
-
+          <VideosLoading
+            width="340px"
+            height="12rem"
+            hideItem={true}
+            loadingCardMaping={[
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+              20,
+            ]}
+          />
         ) : (
-          <Videos videos={data} />
+          <div>
+            <h1>Trending Movies</h1>
+            <CustomScrollBar>
+            <Movies
+              videos={[
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                19, 20,
+              ]}
+            />
+            </CustomScrollBar>
+            <h1>Popular Movies</h1>
+            <Movies
+              videos={[
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                19, 20,
+              ]}
+            />
+            <h1>Popular Movies</h1>
+            <Movies
+              videos={[
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
+                19, 20,
+              ]}
+            />
+          </div>
         )}
         {error && <div className="text-red-500 ">{error.message}</div>}
       </div>

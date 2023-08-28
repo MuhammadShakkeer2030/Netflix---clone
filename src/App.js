@@ -1,25 +1,35 @@
-import { useEffect } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Feed, VideoDetails, ChannelDetails, SearchFeed, Navbar } from "./components";
+import { Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import { AuthContextProvider } from './context/AuthContext';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Account from './pages/Account';
+import ProtectedRoute from './components/ProtectedRoute';
+import Footer from './components/Footer';
+import CustomScrollBar from './components/CustomScrollBar';
 
-// import fetchData from './utilty/FetchFromApi'
 function App() {
-  // useEffect(()=>{
-  //   fetchData()
-  // },[])
   return (
-    <BrowserRouter>
-      <div className="bg-[#000] px-100px">
+    <>
+      <AuthContextProvider>
         <Navbar />
-        
         <Routes>
-          <Route path="/" element={<Feed />} />
-          <Route path="/video/:id" element={<VideoDetails />} />
-          <Route path="/channel/:id" element={<ChannelDetails />} />
-          <Route path="/search/:searchTerm" element={<SearchFeed />} />
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route
+            path='/account'
+            element={
+              <ProtectedRoute>
+                <Account />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-      </div>
-    </BrowserRouter>
+        <Footer/>
+      </AuthContextProvider>
+    </>
   );
 }
 

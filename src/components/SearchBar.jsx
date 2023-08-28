@@ -65,7 +65,7 @@ function SearchBar() {
       {/* displaying recent searches */}
       {showRecentSearch && (
         <div className="absolute z-10 bg-black top-10 right-0 left-0 max-h-[300px] h-auto rounded-2xl overflow-y-scroll">
-         {Array.from(recentSearch).map((item,index,array)=> <li>{b}</li> )}
+         {/* {Array.from(recentSearch).map((item,index,array)=> <li>{b}</li> )} */}
         </div>
       )}
     </form>
