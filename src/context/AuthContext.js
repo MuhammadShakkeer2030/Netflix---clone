@@ -1,12 +1,15 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import { auth, db } from '../firebase';
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth, db } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-} from 'firebase/auth';
-import {setDoc,doc} from 'firebase/firestore'
+  GoogleAuthProvider,
+  signInWithPopup
+} from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -15,9 +18,9 @@ export function AuthContextProvider({ children }) {
 
   function signUp(email, password) {
     createUserWithEmailAndPassword(auth, email, password);
-    setDoc(doc(db, 'users', email), {
-        savedShows: []
-    })
+    setDoc(doc(db, "users", email), {
+      savedShows: [],
+    });
   }
 
   function logIn(email, password) {
@@ -28,6 +31,23 @@ export function AuthContextProvider({ children }) {
     return signOut(auth);
   }
 
+  const navigate = useNavigate()
+
+  const googleLogin = async () => {
+    try {
+      console.log("Google login");
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      setUser(result.user?.email);
+      // console.log(result.user?.email)
+      // Redirect to the root path
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error with Google login:", error);
+    }
+  };
+  
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -38,7 +58,7 @@ export function AuthContextProvider({ children }) {
   });
 
   return (
-    <AuthContext.Provider value={{ signUp, logIn, logOut, user }}>
+    <AuthContext.Provider value={{ signUp, logIn, logOut, user , googleLogin}}>
       {children}
     </AuthContext.Provider>
   );
